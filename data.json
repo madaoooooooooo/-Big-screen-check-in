@@ -1,0 +1,16 @@
+{
+  "seatData": [],
+  "nameList": [],
+  "mainTitle": "座序图",
+  "subTitle": "拖动调整座位，点击标记状态",
+  "screenBg": "#bb3a3a",
+  "textureArea": {
+    "startRow": 1,
+    "endRow": 13,
+    "startCol": 2,
+    "endCol": 3
+  },
+  "textureColor": "#e1f5fe",
+  "texturePattern": "solid",
+  "filledCells": []
+}

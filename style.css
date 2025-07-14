@@ -1,0 +1,1004 @@
+html, body {
+    height: 100%; /* 确保根元素和body填满高度 */
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* 防止意外的滚动条 */
+}
+
+/* 页面整体样式 */
+body {
+    /* margin: 0; */ /* 已在上面设置 */
+    /* padding: 0; */ /* 已在上面设置 */
+    background: #ccc; /* 背景色仅用于容器外部 */
+    font-family: '微软雅黑', Arial, sans-serif;
+    display: flex; /* 使用 flex 居中容器 */
+    justify-content: center;
+    align-items: center;
+    /* min-height: 100vh; */ /* 由 height: 100% 替代 */
+    /* padding: 20px 0; */ /* 移除上下内边距 */
+}
+.container {
+    /* 恢复之前的响应式和比例设置 */
+    aspect-ratio: 9 / 16;
+    height: 100%; /* 让容器高度充满100%的body高度 */
+    /* height: 100vh; */ /* 或者继续使用 vh 单位 */
+    max-width: 100vw; /* 最大宽度不超过视口宽度 */
+    max-height: 100vh; /* 最大高度不超过视口高度 */
+
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 0; /* 全屏时通常不需要圆角 */
+    box-shadow: none; /* 全屏时通常不需要阴影 */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden; /* 防止内容溢出 */
+}
+header {
+    padding: 8px 0; /* MODIFIED: Vertical padding only */
+    position: relative;
+    border-bottom: 1px solid #eee;
+    /* 标题背景样式 */
+    background-size: cover; /* 改回 cover */
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.toolbar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 0 24px; /* ADDED: Horizontal padding for toolbar contents */
+    box-sizing: border-box; /* ADDED: Ensure padding is included in width calculation */
+}
+.header-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 80px;
+}
+.header-right {
+    width: auto; /* 移除固定宽度，让其根据内容调整 */
+    display: flex;
+    gap: 5px; /* 给按钮之间加点间距 */
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+.header-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-top: 18px;
+    width: 100%; /* 让 header-center 占据全部可用宽度 */
+}
+.title-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 确保内部元素在交叉轴上居中 */
+    justify-content: center; /* 确保内部元素在主轴上居中 */
+    width: 100%; /* 让 title-block 占据其父元素 header-center 的全部宽度 */
+    /* width: calc(100% * (7 * 31 + 7) / (7 * 31 + 7)); */ /* 之前的尝试，简化为100% */
+    max-width: 100%;
+    text-align: center;
+    position: relative;
+}
+button, .mode-btn, .mini-btn, #manageBtn {
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+    margin: 0 2px;
+    box-shadow: none;
+    outline: none;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    font-weight: normal;
+    min-width: 48px;
+    min-height: 26px;
+}
+button:hover, .mode-btn:hover, .mini-btn:hover, #manageBtn:hover {
+    background: #e0e0e0;
+    color: #1976d2;
+    border-color: #bdbdbd;
+}
+.btn-group {
+    display: inline-flex;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    margin: 0 2px;
+    vertical-align: middle;
+    background: #f5f5f5;
+}
+.btn-group .mode-btn {
+    border: none;
+    border-radius: 0;
+    background: #f5f5f5;
+    color: #333;
+    min-width: 54px;
+    min-height: 28px;
+    font-size: 0.95em;
+    padding: 3px 10px;
+    margin: 0;
+    transition: background 0.2s, color 0.2s;
+}
+.btn-group .mode-btn:first-child {
+    border-radius: 6px 0 0 6px;
+}
+.btn-group .mode-btn:last-child {
+    border-radius: 0 6px 6px 0;
+}
+.btn-group .mode-btn.active {
+    background: #1976d2;
+    color: #fff;
+}
+.btn-group .mode-btn:not(.active):hover {
+    background: #e0e0e0;
+    color: #1976d2;
+}
+#iconTools {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 8px;
+}
+#iconTools button {
+    padding: 3px 10px;
+    font-size: 0.95em;
+    border-radius: 6px;
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+    margin: 0 2px;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    min-width: 54px;
+    min-height: 28px;
+}
+#iconTools button:hover {
+    background: #e0e0e0;
+    color: #1976d2;
+    border-color: #bdbdbd;
+}
+.icon-label {
+    font-size: 0.95em;
+    cursor: pointer;
+    background: #f5f5f5;
+    border-radius: 6px;
+    padding: 3px 10px;
+    margin-right: 2px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    min-width: 54px;
+    min-height: 28px;
+}
+.icon-label span {
+    margin-left: 2px;
+}
+.icon-label:hover {
+    background: #e0e0e0;
+    color: #1976d2;
+    border-color: #bdbdbd;
+}
+.edit-title-btn {
+    /* font-size: 0.7em; */ /* 之前的字体大小 */
+    font-size: 0.5em; /* 进一步缩小字体 */
+    color: #888;
+    cursor: pointer;
+    background: none; /* 移除背景 */
+    border: none; /* 移除边框 */
+    padding: 0; /* 移除内边距 */
+    transition: color 0.2s; /* 简化过渡效果 */
+    position: absolute; /* 绝对定位 */
+    top: 50%; /* 垂直居中于所在行 */
+    right: -5px; /* 放置在父元素外部右侧，根据需要调整偏移 */
+    transform: translateY(-50%); 
+    /* left: 100%; */ /* 不需要 left 了，直接用 right 控制 */
+    line-height: 1; /* 确保行高不影响定位 */
+    display: none; /* 默认隐藏, JS会控制 */
+}
+
+.edit-mode .title-block #editTitleBtn { 
+    display: inline-block !important; /* KEPT: This might be needed to override other potential styles */
+}
+
+.edit-title-btn:hover {
+    color: #1976d2;
+    background: none; /* 悬停时也不要背景 */
+    border: none;
+}
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    position: relative;
+}
+#mainTitle, #subTitle {
+    display: block; /* 改为 block 使其能更好地控制宽度和居中 */
+    margin: 0 auto; /* 水平居中块级元素 */
+    vertical-align: middle; /* 这个对于block元素意义不大，但保留无害 */
+    text-align: center; /* 确保内部文本居中 */
+    width: 100%; /* 让标题宽度充满 title-block */
+    position: relative; /* 确保编辑按钮可以相对于它们定位 */
+}
+#mainTitle {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 2px;
+    /* position: relative; */ /* 已在上面统一设置 */
+    /* display: inline-block; */ /* 改为 block */
+    /* padding-right: 25px; */ /* 移除内边距，按钮已移到外部 */
+    box-sizing: border-box; 
+}
+#subTitle {
+    font-size: 1em;
+    color: #888;
+    font-weight: normal;
+    margin-top: 2px;
+}
+.edit-mode #headerCenter {
+    margin-top: 40px;
+}
+.seating-grid {
+    display: grid;
+    /* !! 调整列宽比例：前7列占31份，第8列占7份 */
+    /* grid-template-columns: repeat(7, 31fr) 7fr; */ 
+    grid-template-columns: repeat(9, 1fr) 0.3fr; /* MODIFIED for 9+1 columns */
+    grid-template-rows: repeat(17, 1fr); /* MODIFIED for 17 rows */
+    gap: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    position: relative;
+    /* 屏幕背景变量暂时移除，后续添加 */
+    background-size: cover; 
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.seat {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: box-shadow 0.2s, background 0.2s;
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    user-select: none;
+    border: none; 
+    /* !! 统一 box-sizing */
+    box-sizing: border-box; 
+}
+/* 编辑模式下的虚线边框 */
+.edit-mode .seat:not(.table-filled) { 
+    border: 1px dashed #90caf9;
+}
+/* 非编辑模式下 */
+.seat:not(.edit-mode) {
+    /* !! 默认无底边框 */
+    border-bottom: none; 
+}
+/* !! 仅为最后一行添加底边框 */
+.seat:not(.edit-mode)[data-row="16"]:not([data-col="9"]) {
+   border-bottom: 2px solid #e0e0e0;
+}
+
+.seat.selected {
+    outline: 2px solid #1976d2; 
+    outline-offset: -1px; 
+    z-index: 10;
+}
+.seat .icon {
+    /* font-size: 1.2em; */ /* 移至JS内联或按需调整 */
+    /* margin-bottom: 2px; */ /* 通过flex布局控制间距 */
+    background: #fff; /* 可以保留卡片感 */
+    border-radius: 6px; /* 可以保留卡片感 */
+    /* width: 32px; */ /* 移除固定宽度，由flex控制 */
+    /* height: 32px; */ /* 移除固定高度，由flex控制 */
+    display: flex; /* 确保是flex容器 */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04); /* 可以保留卡片感 */
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0; /* 防止图标在空间不足时过度缩小 */
+}
+.icon-img {
+    width: 90% !important; /* 保持图片在容器内有少许边距 */
+    height: 90% !important;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+}
+.icon-emoji {
+    font-size: 1.1em;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+.seat .name {
+    /* font-size: 0.8em; */ /* 移至JS或按需调整，现在尝试用flex填充 */
+    color: #333;
+    word-break: break-word;
+    /* background: #fff; */ /* 名字背景可以透明，依赖卡片背景 */
+    /* border-radius: 4px; */
+    /* margin-top: 3px; */ /* 通过flex布局控制间距 */
+    /* padding: 1px 3px; */ /* JS中已设置 padding: 0 1px */
+    /* min-width: 24px; */ /* 移除最小宽度 */
+    text-align: center;
+    overflow: hidden; /* 改为hidden以配合text-overflow */
+    text-overflow: ellipsis; /* 超出显示省略号 */
+    white-space: nowrap;  /* 强制不换行，配合ellipsis */
+    /* line-height: 1.2em; */ /* 移至JS或按需调整 */
+    position: relative;
+    z-index: 2;
+    width: 100%; /* 确保名字部分能利用分配到的flex空间 */
+    font-size: 8px; /* MODIFIED: Reduced font size for smaller cells */
+    line-height: 1.1; /* MODIFIED: Adjusted line height */
+}
+/* 已标记状态：只改变背景色 */
+.seat.marked .icon,
+.seat.marked .name {
+    background: #c8e6c9; /* 淡绿色背景 */
+    color: #388e3c;
+}
+
+/* !! 新增：标记覆盖层样式 */
+.mark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 背景色由 JS 设置 */
+    pointer-events: none; /* 不干扰下方点击 */
+    z-index: 3; /* 覆盖 icon 和 name */
+    border-radius: inherit; /* 继承座位的圆角 (虽然现在是0) */
+}
+
+#screenColorBtn {
+    display: none;
+}
+#screenColorInput {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    z-index: -1;
+}
+.screen-color-btn {
+    min-width: 54px;
+    min-height: 28px;
+    padding: 3px 10px;
+    font-size: 0.95em;
+    border-radius: 6px;
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+    margin: 0 2px;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    cursor: pointer;
+}
+.screen-color-btn:hover {
+    background: #e0e0e0;
+    color: #1976d2;
+    border-color: #bdbdbd;
+}
+
+/* 模态框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative;
+    max-height: 80vh; /* 新增：限制最大高度为视口的80% */
+    overflow-y: auto; /* 新增：当内容超出时允许垂直滚动 */
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #777;
+}
+
+.close:hover {
+    color: #333;
+}
+
+#nameList {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#nameList li {
+    padding: 6px 10px;
+    background: #f5f5f5;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#nameInput {
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 8px;
+    width: 70%;
+}
+
+#manageBtn {
+    display: none;
+    background-color: #2196f3;
+    color: white;
+    border-color: #1565c0;
+    font-weight: bold;
+}
+
+#manageBtn:hover {
+    background-color: #1976d2;
+    color: white;
+}
+
+#rotateTools {
+    display: none;
+    margin-left: 2px;
+    height: 26px;
+    justify-content: space-between;
+}
+
+.mini-rotate-btn {
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0px 4px;
+    font-size: 0.8em;
+    cursor: pointer;
+    margin: 0;
+    min-width: 24px !important;
+    height: 12px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mini-rotate-btn:hover {
+    background: #e0e0e0;
+    color: #1976d2;
+    border-color: #bdbdbd;
+}
+
+.texture-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 180px;
+}
+
+.control-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.control-group button {
+    width: 40px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    transition: background 0.2s;
+    border-radius: 4px;
+}
+
+.control-group button:hover:not([disabled]) {
+    background: #e0e0e0;
+}
+
+.control-group button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.texture-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.texture-selector select {
+    padding: 8px 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.texture-selector input[type="color"] {
+    width: 100%;
+    height: 32px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#applyTextureBtn {
+    margin-top: 8px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#applyTextureBtn:hover {
+    background-color: #388e3c;
+}
+
+.texture-info {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    padding: 6px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+
+/* 填充区域样式 */
+.seat.texture-area {
+    border: 1px dashed #ff9800;
+    background-color: rgba(255, 152, 0, 0.05);
+    position: relative;
+    z-index: 1;
+}
+
+.seat.texture-filled {
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/*
+.edit-mode #editTitleBtn,
+.edit-mode #editSubTitleBtn { // 移除这个旧规则 
+    display: block; 
+}
+*/
+
+#changeBgBtn {
+    position: absolute;
+    top: 2px;
+    left: 10px;
+    z-index: 500;
+    display: none;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* 删除表格背景按钮样式 */
+#deleteBgBtn {
+    position: absolute;
+    top: 2px;
+    left: 45px; /* 放在更换按钮右侧 */
+    z-index: 500;
+    display: none;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* 标题背景按钮样式 (保持 mini-btn 基础样式即可) */
+#changeTitleBgBtn,
+#deleteTitleBgBtn {
+    /* 可根据需要调整 mini-btn 样式 */
+    display: none; /* 默认隐藏，由 JS 控制 */
+}
+
+/* !! ---- 移除屏幕片段样式 ---- */
+/*
+.screen-segment { ... }
+.edit-mode .screen-segment { ... }
+.edit-mode .screen-segment:hover { ... }
+.screen-segment-text { ... }
+*/
+/* !! ---- 移除结束 ---- */
+
+/* !! ---- 添加屏幕文字样式 ---- */
+.screen-char {
+    font-weight: bold;
+    font-size: 1.1em; /* 可调整大小 */
+    color: rgba(255, 255, 255, 0.9); /* 白色字体，带点透明 */
+    display: flex; /* 使用 flex 进行对齐 */
+    width: 100%;
+    height: 100%;
+    justify-content: center; /* 水平居中 */
+}
+.align-top {
+    align-items: flex-start; /* 垂直居上 */
+    padding-top: 2px; /* 微调 */
+}
+.align-middle {
+    align-items: center; /* 垂直居中 */
+}
+.align-bottom {
+    align-items: flex-end; /* 垂直居下 */
+    padding-bottom: 2px; /* 微调 */
+}
+/* !! ---- 屏幕文字样式结束 ---- */
+
+/* !! ---- 添加屏幕控制面板样式 ---- */
+.screen-controls {
+    position: fixed;
+    top: 20px; /* 调整垂直位置 */
+    left: 20px; /* 调整水平位置 */
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1100; /* 比 modal 高一点 */
+    width: 220px; /* 调整宽度 */
+    display: flex; /* 使用 flex 布局 */
+    flex-direction: column; /* 垂直排列 */
+    gap: 10px; /* 控制元素间距 */
+}
+
+.screen-controls h4 {
+    margin: 0 0 10px 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.screen-controls .control-group {
+    display: flex;
+    flex-direction: column; /* 标签和输入框垂直排列 */
+    gap: 5px;
+}
+
+.screen-controls label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+.screen-controls input[type="color"] {
+    width: 100%;
+    height: 30px;
+    padding: 0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.screen-controls input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
+
+.screen-controls #screenOpacityValue {
+    font-size: 12px;
+    text-align: right;
+    color: #555;
+}
+
+.screen-controls button {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background-color: #6c757d; /* 关闭按钮颜色 */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.screen-controls button:hover {
+    background-color: #5a6268;
+}
+/* !! ---- 屏幕控制面板样式结束 ---- */
+
+/* !! ---- 添加标记控制面板样式 ---- */
+.mark-controls {
+    position: fixed;
+    top: 60px; /* 调整位置避免与屏幕控件重叠 */
+    left: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1100; 
+    width: 220px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+}
+
+.mark-controls h4 {
+    margin: 0 0 10px 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.mark-controls .control-group {
+    display: flex;
+    flex-direction: column; 
+    gap: 5px;
+}
+
+.mark-controls label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+.mark-controls input[type="color"] {
+    width: 100%;
+    height: 30px;
+    padding: 0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.mark-controls input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
+
+.mark-controls #markOpacityValue {
+    font-size: 12px;
+    text-align: right;
+    color: #555;
+}
+
+.mark-controls button {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background-color: #6c757d; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.mark-controls button:hover {
+    background-color: #5a6268;
+}
+/* !! ---- 标记控制面板样式结束 ---- */
+
+/* !! ---- 新增：座位卡片基础样式，为动画做准备 !! */
+.person-card {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+/* !! 新增：座位卡片悬浮动画 !! */
+.person-card:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important; /* 强调阴影 */
+    z-index: 20; /* 确保在悬浮时在最上层 */
+}
+
+/* !! ---- 新增：名字控制面板样式 (仿照标记控制面板) ---- */
+.name-controls {
+    position: fixed;
+    top: 60px; /* 与标记控件相同位置 */
+    left: 20px; /* 与标记控件相同位置 */
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1100; 
+    width: 220px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+}
+
+.name-controls h4 {
+    margin: 0 0 10px 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.name-controls .control-group {
+    display: flex;
+    flex-direction: column; 
+    gap: 5px;
+}
+
+.name-controls label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+.name-controls input[type="color"] {
+    width: 100%;
+    height: 30px;
+    padding: 0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.name-controls input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
+
+.name-controls #nameOpacityValue { /* 注意 ID 对应JS中的 span */
+    font-size: 12px;
+    text-align: right;
+    color: #555;
+}
+
+.name-controls button { /* 通用按钮样式 */
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    background-color: #f5f5f5;
+    color: #333;
+}
+.name-controls button:hover {
+    background-color: #e0e0e0;
+}
+
+/* 关闭按钮特殊样式 */
+.name-controls button#closeNameControls { /* 特指关闭按钮 */
+    margin-top: 10px;
+    background-color: #6c757d; 
+    color: white;
+    border: none;
+}
+
+.name-controls button#closeNameControls:hover {
+    background-color: #5a6268;
+}
+
+/* 切换未标记/标记时按钮的激活样式 */
+.name-controls .control-group button { /* 指的是 "未标记时" "标记时" 按钮 */
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
+.name-controls .control-group button.active { /* 添加 active 类来高亮 */
+    background-color: #1976d2;
+    color: white;
+    border-color: #1976d2;
+}
+
+/* 特定针对 "未标记时" 和 "标记时" 按钮的父容器 */
+.name-controls .control-group.button-row {
+    flex-direction: row; /* 改为行排列 */
+    justify-content: space-around; /* 分散对齐或使用 gap */
+    gap: 5px; /* 按钮间距 */
+    align-items: center; /* 垂直居中 */
+}
+
+/* "未标记时" 和 "标记时" 按钮本身的样式调整 */
+.name-controls .control-group.button-row button {
+    flex: 1; /* 让按钮平分空间 */
+    padding: 3px 6px; /* 缩小内边距 */
+    font-size: 0.85em; /* 缩小字体 */
+    min-width: auto; /* 移除最小宽度限制 */
+}
+
+/* !! ---- 名字控制面板样式结束 ---- */
+
+/* !! ---- 强制添加：编辑按钮 (#editBtn) 默认样式 (非编辑模式) ---- */
+#editBtn {
+    position: fixed; 
+    top: 1px;
+    left: 1px;
+    z-index: 1001; 
+    font-size: 10px; 
+    width: 18px;   
+    height: 18px;  
+    padding: 0;    
+    line-height: 18px; 
+    text-align: center; 
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: background 0.2s, box-shadow 0.2s;
+    min-width: 0; /* 覆盖默认的min-width */
+    min-height: 0; /* 覆盖默认的min-height */
+}
+#editBtn:hover {
+    background: #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+/* !! ---- 默认样式结束 ---- */
+
+/* !! ---- 强制添加：编辑按钮在工具栏中的样式 (编辑模式) ---- */
+.toolbar-row #editBtn {
+    position: static; 
+    top: auto;
+    left: auto;
+    z-index: auto;
+    font-size: 0.9em; 
+    width: auto;     
+    height: auto;    
+    padding: 3px 8px; 
+    line-height: normal; 
+    min-width: 48px; /* 恢复 mini-btn 的最小宽度 */
+    min-height: 26px; /* 恢复 mini-btn 的最小高度 */
+    box-shadow: none; 
+    /* 确保覆盖 fixed 定位时的样式 */
+    color: #333; 
+    background: #f5f5f5; 
+    border: 1px solid #ccc;
+    border-radius: 6px; /* 保持工具栏按钮圆角一致 */
+}
+/* !! ---- 工具栏样式结束 ---- */
