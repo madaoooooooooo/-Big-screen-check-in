@@ -25,3 +25,7 @@
 - index.html  主页面
 - style.css   样式文件
 - script.js   逻辑脚本
+
+<img width="590" height="1021" alt="1" src="https://github.com/user-attachments/assets/2c15fe1f-9ad6-439c-b6e2-ade3674c1b25" />
+
+<img width="576" height="1024" alt="2" src="https://github.com/user-attachments/assets/6ef9ce97-4968-4d43-8bd0-7157d7ec30af" />
